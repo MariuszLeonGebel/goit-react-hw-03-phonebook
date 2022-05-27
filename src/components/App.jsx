@@ -1,16 +1,73 @@
-export const App = () => {
-  return (
-    <div
-      style={{
+import React, {useState} from 'react';
+import AddContacts from './AddContacts/AddContacts';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
+import { nanoid } from "nanoid"
+
+export const App = () => {  
+  const [persons, setPersons] = useState([])
+  const [copyPersons, setCopyPersons] = useState([])
+  const [name, setName] = useState("")
+  const [nr, setNr] = useState("")
+  const [filt, setFilt] = useState("")
+   
+  function addContact() {
+    if (persons.find(person => person.name.toLowerCase() === name.toLowerCase())) {
+      alert(`${name} is already in contacts`)
+      setName("")
+      setNr("")
+      return
+    }
+    setPersons(prev => [...prev, { id: nanoid(), name, nr }])
+    setCopyPersons(prev => [...prev, { id: nanoid(), name, nr }])
+    setName("")
+    setNr("")    
+  }
+
+  function handleNameChange(e) {
+    setName(e.target.value)
+  }
+
+  function handleTelChange(e) {
+    setNr(e.target.value)
+  }
+
+  function deletePerson(contactId) {  
+    const pos = persons.map(function(e) { return e.id; }).indexOf(contactId);
+    const newFriends = [...persons]
+    newFriends.splice(pos, 1)
+    setPersons(newFriends)
+    setCopyPersons(newFriends)
+  }
+
+  function filterChange(e) { 
+    const currentFilter = e.target.value
+    setFilt(currentFilter)
+    handleFilterChange(currentFilter)    
+  }
+
+  function handleFilterChange(filtr) {
+    setPersons(copyPersons.filter(person => person.name.toUpperCase().includes(filtr.toUpperCase())))    
+  }
+
+  const styles = {
         height: '100vh',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        fontSize: 40,
+        marginTop: "30px",
+        fontSize: 16,
         color: '#010101'
-      }}
-    >
-      React homework template mg
+  }
+
+  return (
+    <div style={styles}>     
+      <h2>Phonebook</h2>
+      <AddContacts nameChange={handleNameChange} telChange={handleTelChange} addingContact={addContact} name={name} nr={nr} />
+      <h2 style={{marginTop: "35px"}}>Contacts</h2>
+      <Filter filter={filterChange} name={filt}/>
+      <ContactList contactList={persons} deletePerson={deletePerson}/>
     </div>
   );
 };

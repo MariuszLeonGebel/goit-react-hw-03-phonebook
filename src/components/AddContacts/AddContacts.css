@@ -1,0 +1,36 @@
+
+.form {
+  border: 1px solid grey;
+  width: 290px;
+  height: 260px;
+  position: relative;
+}
+
+.form__title {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.form__input {
+  margin: auto auto 0 20px;
+  width: 240px;
+  height: 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.form__btn {
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 25px;
+  position: absolute;
+  border: none;
+  left: 20px;
+  bottom: 15px;
+  cursor: pointer;
+}

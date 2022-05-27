@@ -1,0 +1,23 @@
+.contact__div {
+  /* margin-top: 0px; */
+  width: 290px;
+  height: 200px;
+}
+
+.contact__list {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  font-weight: normal;
+}
+
+button {
+  border-radius: 5px;
+  height: 20px;
+  cursor: pointer;
+}
