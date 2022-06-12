@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AddContacts from './AddContacts/AddContacts';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { nanoid } from "nanoid"
+import { nanoid } from "nanoid";
+import {dataStorage} from '../dataStorage.js';
 
 export const App = () => {  
-  const [persons, setPersons] = useState([])
+  const [persons, setPersons] = useState(() => dataStorage.getDataStorage('contacts') ?? [],)
   const [copyPersons, setCopyPersons] = useState([])
   const [name, setName] = useState("")
   const [nr, setNr] = useState("")
   const [filt, setFilt] = useState("")
-   
+ 
   function addContact() {
     if (persons.find(person => person.name.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is already in contacts`)
@@ -18,11 +19,17 @@ export const App = () => {
       setNr("")
       return
     }
+    
     setPersons(prev => [...prev, { id: nanoid(), name, nr }])
     setCopyPersons(prev => [...prev, { id: nanoid(), name, nr }])
     setName("")
-    setNr("")    
+    setNr("")
   }
+
+  useEffect(() => {
+   console.log("Jestem w useEffect-set ", persons)
+    localStorage.setItem('contacts', JSON.stringify(persons))
+  }, [persons])
 
   function handleNameChange(e) {
     setName(e.target.value)
